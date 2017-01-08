@@ -156,9 +156,9 @@ func (g *Glob) getSubExprs(subPatt []byte) (result []subExpression) {
 					result = append(result, subExpr)
 					// 恢复默认匹配方式
 					subExpr.mode = matchStart
-				// 此处不允许出现 case '*': 的情况，因为单独的 * 字符，
-				// 在 g.compile 中已经处理过了
-				// case '*':
+					// 此处不允许出现 case '*': 的情况，因为单独的 * 字符，
+					// 在 g.compile 中已经处理过了
+					// case '*':
 				}
 			}
 		// 如果 c 为普通字符
@@ -338,11 +338,11 @@ func (g *Glob) hasSuffix(b []byte, subExprs []subExpression) bool {
 		case matchStart: // 如果是普通字符
 			// 长度不够，或者不匹配
 			if len(b) < len(sub.expr) ||
-				!equal(b[len(b) - len(sub.expr):], sub.expr, g.CaseMind) {
+				!equal(b[len(b)-len(sub.expr):], sub.expr, g.CaseMind) {
 				return false
 			}
 			// 匹配成功，去掉 b 中匹配的部分，继续处理剩下的部分
-			b = b[:len(b) - len(sub.expr)]
+			b = b[:len(b)-len(sub.expr)]
 		case matchOne: // 如果是 ? 字符
 			// 长度不够
 			if len(b) == 0 {
@@ -350,7 +350,7 @@ func (g *Glob) hasSuffix(b []byte, subExprs []subExpression) bool {
 			}
 			// 长度够，去掉 b 中匹配的部分，继续处理剩下的部分
 			_, size := utf8.DecodeRune(b)
-			b = b[:len(b) - size]
+			b = b[:len(b)-size]
 			continue
 		}
 	}
