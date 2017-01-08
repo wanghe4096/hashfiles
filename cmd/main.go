@@ -23,11 +23,12 @@ func main() {
 	flag.StringVar(&OutputFile, "o", "sha1.log", "output log file")
 	flag.Parse()
 
-	fd, err := os.OpenFile(OutputFile, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0644)
+	fd, err := os.OpenFile(OutputFile, os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
 		log.Println(err.Error())
 		return
 	}
+	log.Println(OutputFile)
 	HashFiles.SetOutput(fd)
 	HashFiles.Run(Dir, IgnoreDir)
 }
